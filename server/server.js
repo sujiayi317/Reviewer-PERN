@@ -6,6 +6,8 @@ const db = require("./db");
 const app = express();
 app.use(morgan("dev"));
 
+// use this middleware so that the body in the post request will become
+// a javascript object that is attached to the req.body:
 app.use(express.json());
 
 // get all restaurants
@@ -46,8 +48,25 @@ app.get("/api/v1/restaurants/:id", async (req, res) => {
 });
 
 // create a restaurant
-app.post("/api/v1/restaurants", (req, res) => {
+app.post("/api/v1/restaurants", async (req, res) => {
   console.log(req.body);
+
+  try {
+    const results = await db.query(
+      "INSERT INTO restaurants (name, location, price_range) values ($1, $2, $3) returning *",
+      [req.body.name, req.body.location, req.body.price_range]
+    );
+    console.log(results);
+
+    res.status(201).json({
+      status: "success",
+      data: {
+        restaurant: "mcdonalds",
+      },
+    });
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 // update restaurant
