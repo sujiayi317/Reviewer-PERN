@@ -61,7 +61,7 @@ app.post("/api/v1/restaurants", async (req, res) => {
     res.status(201).json({
       status: "success",
       data: {
-        restaurant: "mcdonalds",
+        restaurant: results.rows[0],
       },
     });
   } catch (err) {
