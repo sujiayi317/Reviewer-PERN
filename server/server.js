@@ -70,24 +70,41 @@ app.post("/api/v1/restaurants", async (req, res) => {
 });
 
 // update restaurant
-app.put("/api/v1/restaurants/:id", (req, res) => {
-  console.log(req.params.id);
-  console.log(req.body);
-  res.status(200).json({
-    status: "success",
-    data: {
-      restaurant: "mcdonalds",
-    },
-  });
+app.put("/api/v1/restaurants/:id", async (req, res) => {
+  try {
+    const results = await db.query(
+      "UPDATE restaurants SET name = $1, location = $2, price_range = $3 where id = $4 returning *",
+      [req.body.name, req.body.location, req.body.price_range, req.params.id]
+    );
+
+    // console.log(req.params.id);
+    console.log(results);
+    res.status(200).json({
+      status: "success",
+      data: {
+        restaurant: results.rows[0],
+      },
+    });
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 // delete a restaurant
-app.delete("/api/v1/restaurants/:id", (req, res) => {
-  console.log(req.params);
+app.delete("/api/v1/restaurants/:id", async (req, res) => {
+  try {
+    const results = await db.query("DELETE FROM restaurants where id = $1", [
+      req.params.id,
+    ]);
 
-  res.status(204).json({
-    status: "success",
-  });
+    console.log(req.params);
+
+    res.status(204).json({
+      status: "success",
+    });
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 const port = process.env.PORT || 3001;
