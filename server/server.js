@@ -1,9 +1,12 @@
 require("dotenv").config();
 const morgan = require("morgan");
 const express = require("express");
+const cors = require("cors");
 const db = require("./db");
 
 const app = express();
+
+app.use(cors());
 app.use(morgan("dev"));
 
 // use this middleware so that the body in the post request will become
@@ -14,7 +17,7 @@ app.use(express.json());
 app.get("/api/v1/restaurants", async (req, res) => {
   try {
     const results = await db.query("select * from restaurants");
-    console.log(results);
+    // console.log(results);
     res.status(200).json({
       status: "success",
       results: results.rows.length,

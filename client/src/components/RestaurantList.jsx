@@ -1,6 +1,23 @@
-import React from 'react'
+import React, {useEffect, useContext } from 'react'
+import RestaurantFinder from '../apis/RestaurantFinder'
+import { RestaurantsContext } from '../context/RestaurantsContext'
 
-const RestaurantList = () => {
+const RestaurantList = (props) => {
+    const { restaurants, setRestaurants } = useContext(RestaurantsContext)
+
+    // ask the component to fetch the data as soon as it mounts to the screen
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await RestaurantFinder.get("/")
+                console.log(response)
+                setRestaurants(response.data.data.restaurants)
+            } catch (err) {}
+
+        }
+        fetchData()
+    }, [])
+
     return (
         <div className="list-group">
             <table className="table table-hover">
