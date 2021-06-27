@@ -80,7 +80,6 @@ const RestaurantList = (props) => {
                     </tr> */}
                 </tbody>
             </table>
-            
         </div>
     )
 }
