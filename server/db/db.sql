@@ -37,3 +37,5 @@ INSERT INTO reviews (restaurant_id, name, review, rating) VALUES (2, 'denise','b
 INSERT INTO reviews (restaurant_id, name, review, rating) VALUES (2, 'mike','bad restaurant', 4);
 
 select * from reviews where restaurant_id = 1;
+
+INSERT INTO reviews (restaurant_id, name, review, rating) VALUES (4, 'mark','restaurant sucked', 2);
