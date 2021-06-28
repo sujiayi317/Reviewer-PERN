@@ -24,3 +24,4 @@ VALUES(123, 'mcdonalds', 'new yorks', 3);
 
 INSERT INTO restaurants (name, location, price_range) 
 VALUES('wendys', 'new york', 4);
+
