@@ -39,3 +39,25 @@ INSERT INTO reviews (restaurant_id, name, review, rating) VALUES (2, 'mike','bad
 select * from reviews where restaurant_id = 1;
 
 INSERT INTO reviews (restaurant_id, name, review, rating) VALUES (4, 'mark','restaurant sucked', 2);
+
+-- aggregate function
+select count(*) from reviews; 
+select count(rating) from reviews; 
+select min(rating) from reviews;
+select max(rating) from reviews;
+select avg(rating) from reviews;
+select trunc(avg(rating), 2) as average_review from reviews;
+
+select name, rating from reviews;
+
+select name as username, rating as restaurant_rating from reviews;
+
+select trunc(avg(rating), 2) as average_review from reviews where restaurant_id = 2;
+
+-- 
+select count(rating) from reviews where restaurant_id = 2;
+
+select location, count(location) from restaurants group by location;
+
+select restaurant_id, count(restaurant_id) from reviews group by restaurant_id;
+
