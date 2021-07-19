@@ -24,7 +24,7 @@ const AddReview = () => {
 
       console.log(response);
       history.push('/');
-
+      // then quickly navigate back to trigger a refresh
       history.push(location.pathname);
     } catch (err) {
       console.log(err);

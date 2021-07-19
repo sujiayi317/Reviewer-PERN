@@ -16,13 +16,20 @@ app.use(express.json());
 // get all restaurants
 app.get("/api/v1/restaurants", async (req, res) => {
   try {
-    const results = await db.query("select * from restaurants");
+    // const results = await db.query("select * from restaurants");
+    const restaurantRatingsData = await db.query(
+      "SELECT * FROM restaurants LEFT JOIN (SELECT restaurant_id, COUNT(*), TRUNC(AVG(rating), 1) as average_rating FROM reviews GROUP BY restaurant_id) reviews ON restaurant_id = reviews.restaurant_id;"
+    )
     // console.log(results);
+    // console.log("results", results)
+    // console.log('restaurant data', restaurantRatingsData)
     res.status(200).json({
       status: "success",
-      results: results.rows.length,
+      // results: results.rows.length,
+      results: restaurantRatingsData.rows.length,
       data: {
-        restaurants: results.rows,
+        // restaurants: results.rows,
+        restaurants: restaurantRatingsData.rows
       },
     });
   } catch (err) {
@@ -131,7 +138,9 @@ app.post("/api/v1/restaurants/:id/addReview", async (req, res) => {
         review: newReview.rows[0],
       },
     });
-  } catch (err) {}
+  } catch (err) {
+    console.log(err)
+  }
 });
 
 const port = process.env.PORT || 3001;
