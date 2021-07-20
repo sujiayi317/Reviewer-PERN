@@ -10,7 +10,7 @@ const AddReview = () => {
   console.log(location);
   const [name, setName] = useState('');
   const [reviewText, setReviewText] = useState('');
-  const [rating, setRating] = useState('rating');
+  const [rating, setRating] = useState('Rating');
 
   const handleSubmitReview = async (e) => {
     e.preventDefault();
@@ -22,7 +22,7 @@ const AddReview = () => {
         rating,
       });
 
-      console.log(response);
+      // console.log(response);
       history.push('/');
       // then quickly navigate back to trigger a refresh
       history.push(location.pathname);
